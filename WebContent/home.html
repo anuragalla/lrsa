@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/loadingoverlay.js"></script>
+    <script type="text/javascript" src="js/form2object.js"></script>
+    <script type="text/javascript" src="js/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <style>
+    textarea {
+        resize: none;
+    }
+    
+    body {
+        padding: 10px;
+    }
+    
+    #exTab1 .tab-content {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+    
+    #exTab2 h3 {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+    /* remove border radius for the tab */
+    
+    #exTab1 .nav-pills > li > a {
+        border-radius: 0;
+    }
+    /* change border radius for the tab , apply corners on top*/
+    
+    #exTab3 .nav-pills > li > a {
+        border-radius: 4px 4px 0 0;
+    }
+    
+    #exTab3 .tab-content {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!--        Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <!--          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> -->
+                <!--            <span class="sr-only">Toggle navigation</span> -->
+                <!--            <span class="icon-bar"></span> -->
+                <!--            <span class="icon-bar"></span> -->
+                <!--            <span class="icon-bar"></span> -->
+                <!--          </button> -->
+                <a class="navbar-brand" href="#">LinearRSA</a>
+            </div>
+                   <!-- Collect the nav links, forms, and other content for toggling -->
+                   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                     <ul class="nav navbar-nav">
+                       <li class="active"><a href="home.html">RSA <span class="sr-only">(current)</span></a></li>
+                       <li><a href="lhome.html">LinearRSA</a></li>
+                       <!-- <li class="dropdown">
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                         <ul class="dropdown-menu">
+                           <li><a href="#">Action</a></li>
+                           <li><a href="#">Another action</a></li>
+                           <li><a href="#">Something else here</a></li>
+                           <li role="separator" class="divider"></li>
+                           <li><a href="#">Separated link</a></li>
+                           <li role="separator" class="divider"></li>
+                           <li><a href="#">One more separated link</a></li>
+                         </ul>
+                       </li> -->
+                     </ul>
+                    <!--  <form class="navbar-form navbar-left" role="search">
+                       <div class="form-group">
+                         <input type="text" class="form-control" placeholder="Search">
+                       </div>
+                       <button type="submit" class="btn btn-default">Submit</button>
+                     </form> -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="lhome.html">Action</a></li>
+                        <li><a href="home.html">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- <button type="button" id="generate" class="btn btn-default">Generate</button> -->
+
+         <div class="container" style="margin-top: 80px;">
+            <form>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <span class="glyphicon glyphicon-comment" id="title-name"><span id="user-n"></span></span>
+                                            <div class="btn-group pull-right">
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                                </button>
+                                                <ul class="dropdown-menu slidedown" id="user-select">
+                                                    <li><a><span class="glyphicon glyphicon-refresh"></span>Refresh</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body" style="height: 250px;">
+                                            <ul class="chat">
+                                                <!--   
+                                                <li class="right clearfix"><span class="chat-img pull-right">
+                                    <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                </span>
+                                                    <div class="chat-body clearfix">
+                                                        <div class="header">
+                                                            <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                                        </div>
+                                                        <p>
+                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                                        </p>
+                                                    </div>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="input-group">
+                                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                                <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                        Send</button>
+                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  <div class="col-md-6">
+                        <label>Plain Text</label>
+                        <textarea id="plain-text" class="form-control" rows="6"></textarea>
+                    </div -->
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label>public key</label>
+                        <textarea id="pubkey" class="form-control" rows="6" disabled></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputPassword1">private key</label>
+                        <textarea id="privkey" class="form-control" rows="6" disabled></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cipher Text</label>
+                        <textarea id="cipher-text" class="form-control" rows="6" disabled></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="user-list">System Time:</label>
+                        <label id="sys-time"></label>
+                        <!-- <select class="form-control" id="user-list">
+                        </select> -->
+                    </div>
+                    <div class="col-md-6">
+                       <!--  <br>
+                        <button type="submit" class="btn btn-default">Submit</button> -->
+                    </div>
+                </div>
+            </form>
+         </div>
+           
+   
+    <script>
+    jQuery(function() {
+        jQuery('#myTab a:last').tab('show')
+    });
+    var gToUser, eType = "RSA";
+    var base_url = "http://localhost:8080/LinearRSA/jaxrs/"
+    var userName = sessionStorage.getItem('userName');
+    var userId = sessionStorage.getItem('userId');
+    console.log("uName: " + userName);
+    console.log("uId: " + userId);
+    $(function() {
+        $('div#exTab2 a').click(function(event) {
+            var ref = $(this).attr('href');
+            if(ref == "#1")
+                eType = "RSA";
+            if(ref == "#2")
+                eType="LinearRSA";
+        });
+        loadUsers();
+        $("#generate").click(function(event) {
+            generateKeys();
+        });
+        $('#btn-input').keyup(function(event) {
+            var plaintext = $('#btn-input');
+            if (plaintext.val() != "") {
+                encrypt(plaintext.val());
+            }
+            if (plaintext.val() == "") {
+                $('#cipher-text').text("");
+            }
+        });
+        // $('a.user-li').on('click',(function(event) {
+        //     alert($(this).data('userid'));
+        // });
+        $("body").on("click", ".user-li", function() {
+            var link = $(this);
+            //alert($(this).data('userid'));
+            //console.log(link.find('a').val());
+            gToUser = $(this).data('userid')
+            $('#user-n').text(" " + $(this).data('username'));
+            retrieveMessagesByUserId();
+        });
+        $('#btn-chat').click(function(event) {
+            event.preventDefault();
+            sendMessage();
+        });
+        window.setInterval(function() {
+            retrieveMessagesByUserId();
+        }, 5000);
+
+    });
+
+    function sendMessage() {
+        var cipherText = $('#cipher-text').val();
+        if (cipherText == "" || cipherText == null) {
+            return;
+        }
+        if (gToUser == null || gToUser == "") {
+            alert("No user selected");
+            return;
+        }
+        var obj = {
+            message: cipherText,
+            type: eType,
+            fromUser: {
+                userId: userId
+            },
+            toUser: {
+                userId: gToUser
+            }
+        };
+        var objectdata = JSON.stringify(obj, null, '\t');
+        console.log(objectdata);
+        $.ajax({
+            url: 'jaxrs/message/create',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                //console.log(JSON.stringify(data));
+                // showKeys(data);
+                $('#btn-input').text('');
+                retrieveMessagesByUserId();
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+    }
+
+    function loadUsers() {
+        $.ajax({
+            url: 'jaxrs/users/retrievelist',
+            type: 'GET',
+            //dataType: 'json',
+            //contentType:'application/json'
+            //data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                //console.log(JSON.stringify(data));
+                // showKeys(data);
+                drawSelection(data);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+
+    }
+
+    function showKeys(data) {
+
+    }
+
+    function generateKeys() {
+        $.ajax({
+            url: 'jaxrs/users/generatekeys/' + eType + '/' + userId,
+            type: 'POST',
+            //dataType: 'json',
+            //contentType:'application/json'
+            //data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                console.log(data + textStatus);
+                console.log(JSON.stringify(data));
+                $("#pubkey").text(data.rsaPubKey);
+                $("#privkey").text(data.rsaPrivKey);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+
+    }
+
+    function encrypt(message) {
+        $.ajax({
+            url: 'jaxrs/users/encrypt/' + eType + '/' + gToUser + '/' + message,
+            type: 'POST',
+            // dataType: 'json',
+            // contentType:'application/json'
+            // data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                console.log(JSON.stringify(data));
+                $("#cipher-text").text(data.rsaNvalue);
+                $("#sys-time").text(data.sysTime);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+    }
+
+    function retrieveMessagesByUserId(userName) {
+        $.ajax({
+            url: 'jaxrs/message/show/' + gToUser + '/' + userId + '/' + eType,
+            type: 'POST',
+            // dataType: 'json',
+            // contentType:'application/json'
+            // data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                //console.log(JSON.stringify(data));
+                addMessages(data);
+                //$("#cipher-text").text(data.nvalue);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+    }
+
+    function addMessages(data) {
+        $('.chat').empty();
+        data = data.message;
+        $.each(data, function(i, item) {
+            console.log(JSON.stringify(item) + "i value: " + i);
+
+            $('.chat').append('<li class="left clearfix"><div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + item.id + '</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + item.type + '</small> </div><p>' + item.message + '</p></div></li>');
+
+
+        });
+    }
+
+    function drawSelection(data) {
+        data = data.users;
+        $.each(data, function(i, item) {
+            // console.log(JSON.stringify(item) + "i value: " + i);
+            $('#user-select').append('<li class="user-li" data-userid="' + item.userId + '" data-username="' + item.name + '"><a class="user-a" >' + item.name + '</a></li>');
+            if (userId == item.userId) {
+                $('#privkey').val(item.rsaPrivKey);
+            }
+
+        });
+        // for (var i = 0; i < data.length; i++) {
+        //     drawRow(data[i]);
+        // }
+    }
+
+
+    // function drawRow(rowData) {
+    //     var row = $("<tr />")
+    //     $("#personDataTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+    //     row.append($("<td>" + rowData.userName + "</td>"));
+    //     row.append($("<td>" + rowData.person.primaryEmail + "</td>"));
+    //     row.append($("<td>" + rowData.contributions + "</td>"));
+    //     row.append($("<td>" + '<button type="button" class="btn btn-info" data-toggle="modal" data-target="" data-userid="' + rowData.userId + '"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>' + "</td>"));
+    // }
+    </script>
+</body>
+
+</html>

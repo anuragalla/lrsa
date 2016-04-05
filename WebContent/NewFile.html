@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/loadingoverlay.js"></script>
+    <script type="text/javascript" src="js/form2object.js"></script>
+    <script type="text/javascript" src="js/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <style>
+    textarea {
+        resize: none;
+    }
+    </style>
+</head>
+
+<body>
+    <button type="button" id="generate" class="btn btn-default">Generate</button>
+    <div class="container">
+        <form name="sample-form" id="sample-form">
+            <div class="form-group">
+<!--                 <div class="col-md-6"> -->
+<!--                     <label>public key</label> -->
+<!--                     <textarea id="pubkey" class="form-control" rows="6" disabled></textarea> -->
+<!--                 </div> -->
+                <div class="col-md-6">
+                    <label>Plain Text</label>
+                    <textarea id="plain-text" class="form-control" rows="6"></textarea>
+                </div>
+            </div>
+<!--             <div class="form-group"> -->
+<!--                 <div class="col-md-6"> -->
+<!--                     <label for="exampleInputPassword1">private key</label> -->
+<!--                     <textarea id="privkey" class="form-control" rows="6" disabled></textarea> -->
+<!--                 </div> -->
+<!--                 <div class="col-md-6"> -->
+<!--                     <label>Cipher Text</label> -->
+<!--                     <textarea id="cipher-text" class="form-control" rows="6" disabled></textarea> -->
+<!--                 </div> -->
+<!--             </div> -->
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label for="user-list">User List:</label>
+                    <select class="form-control" id="user-list">
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <br>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+    <script>
+	$('#generate').click(function(event){
+		var formData = form2object('sample-form', '.', true, function(node) {
+            if (node.id && node.id.match(/callbackTest/)) {
+                return {
+                    name: node.id,
+                    value: node.innerHTML
+                };
+            }
+        });
+        // formData.tag=$("#tags").tagsinput('items');
+        console.log(formData);
+        var objectdata = JSON.stringify(formData, null, '\t');
+		$.ajax({
+            url: 'jaxrs/testuuid/create',
+            type: 'POST',
+            dataType: 'json',
+            contentType:'application/json'
+            data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                //console.log(JSON.stringify(data));
+                drawSelection(data);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+			
+	 });
+	
+
+    
+    var base_url = "http://localhost:8080/LinearRSA/jaxrs/"
+    var userName = sessionStorage.getItem('userName');
+    var userId = sessionStorage.getItem('userId');
+    console.log("uName: " + userName);
+    console.log("uId: " + userId);
+    $(function() {
+        loadUsers();
+        $("#generate").click(function(event) {
+            generateKeys();
+        });
+        $('#plain-text').keyup(function(event) {
+            var plaintext = $('#plain-text');
+            if (plaintext.val() != "") {
+                encrypt(plaintext.val());
+            }
+            if (plaintext.val() == "") {
+                $('#cipher-text').val("");
+            }
+        });
+    });
+
+    function loadUsers() {
+        $.ajax({
+            url: 'jaxrs/users/retrievelist',
+            type: 'GET',
+            //dataType: 'json',
+            //contentType:'application/json'
+            //data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                //console.log(JSON.stringify(data));
+                drawSelection(data);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+
+    }
+
+    function generateKeys() {
+        $.ajax({
+            url: 'jaxrs/users/generatekeys/rsa/' + userId,
+            type: 'POST',
+            //dataType: 'json',
+            //contentType:'application/json'
+            //data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                console.log(data + textStatus);
+                console.log(JSON.stringify(data));
+                $("#pubkey").text(data.rsaPubKey);
+                $("#privkey").text(data.rsaPrivKey);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+
+    }
+
+    function encrypt(message) {
+        $.ajax({
+            url: 'jaxrs/users/encrypt/rsa/' + userId + '/' + message,
+            type: 'POST',
+            // dataType: 'json',
+            // contentType:'application/json'
+            // data: objectdata,
+            success: function(data, textStatus, jqXHR) {
+                console.log(JSON.stringify(data));
+                $("#cipher-text").text(data.nvalue);
+            },
+            error: function(xhr, error) {
+                console.log("err" + error);
+                //change();
+                if (xhr.responseText != null && xhr.responseText != '') {
+                    // alert(xhr.responseText);
+                } else {
+                    // alert('Error! Status = ' + xhr.status + ' Message = ' + error);
+                }
+            }
+        });
+    }
+
+    function drawSelection(data) {
+        data=data.users;
+        $.each(data, function(i, item) {
+            console.log(JSON.stringify(item)+"i value: "+i);
+            $('#user-list').append($('<option>', {
+                value: item.userId,
+                text: item.email
+            }));
+        });
+        // for (var i = 0; i < data.length; i++) {
+        //     drawRow(data[i]);
+        // }
+    }
+
+    // function drawRow(rowData) {
+    //     var row = $("<tr />")
+    //     $("#personDataTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+    //     row.append($("<td>" + rowData.userName + "</td>"));
+    //     row.append($("<td>" + rowData.person.primaryEmail + "</td>"));
+    //     row.append($("<td>" + rowData.contributions + "</td>"));
+    //     row.append($("<td>" + '<button type="button" class="btn btn-info" data-toggle="modal" data-target="" data-userid="' + rowData.userId + '"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>' + "</td>"));
+    // }
+    </script>
+</body>
+
+</html>
